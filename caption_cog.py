@@ -84,7 +84,7 @@ def main(args):
         del gen_kwargs["max_length"]
 
     if not do_sample:
-        print(f"** Using greedy sampling")
+        print(f"** Using greedy search instead sampling. Generated captions will be deterministic; meaning it will be the same even if you run this program multiple times.")
         del gen_kwargs["top_k"]
         del gen_kwargs["top_p"]
         del gen_kwargs["temperature"]
@@ -139,7 +139,7 @@ def main(args):
             caption = tokenizer.decode(outputs_without_prompt[0], skip_special_tokens=True)
             caption += args.append
 
-            with open(candidate_caption_path, "w") as f:
+            with open(candidate_caption_path, "w", encoding="utf-8") as f:
                 f.write(caption)
             vram_gb = get_gpu_memory_map()
             elapsed_time = time.time() - start_time
